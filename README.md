@@ -2,7 +2,7 @@
 
 ![Transformation example](docs/transformation-example.png)
 
-The `excel-transformer-script` project is a Python-based tool designed to modify Excel files through a terminal-based user interface.
+This project is a Python-based tool designed to modify Excel files through a terminal-based user interface.
 
 Utilizing the `openpyxl` library for Excel file manipulations and the [textual](https://github.com/Textualize/textual/tree/main) library
 for creating an interactive terminal UI, the script performs specific data transformations while preserving cell formatting and colors.
