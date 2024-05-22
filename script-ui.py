@@ -1,7 +1,7 @@
 from textual.app import App
 from textual.binding import Binding
 from textual.containers import Container
-from textual.widgets import Button, Input, Label, Header, Footer
+from textual.widgets import Button, Input, Label, Header, Footer, TextArea
 
 from script import transform_excel
 
@@ -37,7 +37,8 @@ class ExcelTransformerApp(App):
             self.query_one("#status_text_container").mount(Label("✅ Successfully transformed Excel file", id="success_text"))
         except Exception as e:
             self.query_one("#status_text_container").remove_children()
-            self.query_one("#status_text_container").mount(Label(f"Error: {str(e)}", id="error_text"))
+            self.query_one("#status_text_container").mount(
+                TextArea(f"Error: {str(e)}", read_only=True, id="error_text"))  # text area to achieve text wrapping
 
 
 if __name__ == "__main__":
