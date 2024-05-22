@@ -134,8 +134,7 @@ dmypy.json
 ## IDEA files ##
 *.idea
 
-## Ignore all Excel files except the example ones ##
+## Ignore all Excel files except the example input file ##
 *.xlsx
 *.xls
 !input.xlsx
-!output.xlsx
