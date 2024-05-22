@@ -1,6 +1,7 @@
 import openpyxl
 from openpyxl.styles import Font
 
+
 def transform_excel(input_file, output_file, start_column_name):
     # Load the workbook and select the active sheet
     wb = openpyxl.load_workbook(input_file)
@@ -39,10 +40,11 @@ def transform_excel(input_file, output_file, start_column_name):
     wb.save(output_file)
     print(f"Modified Excel successfully saved as '{output_file}'")
 
-# Update these values
-input_excel_file = 'input.xlsx'  # Replace with your input file name
-output_excel_file = 'output.xlsx'  # Replace with your desired output file name
-start_column_name = 'First column to modify'  # Replace with your specific start column name
 
-transform_excel(input_excel_file, output_excel_file, start_column_name)
+if __name__ == "__main__":
+    # Update these values
+    input_excel_file = 'input.xlsx'  # Replace with your input file name
+    output_excel_file = 'output.xlsx'  # Replace with your desired output file name
+    start_column_name = 'First column to modify'  # Replace with your specific start column name
 
+    transform_excel(input_excel_file, output_excel_file, start_column_name)
