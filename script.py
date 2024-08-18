@@ -12,7 +12,7 @@ STRATEGIES_MAP = {
 # noinspection PyShadowingNames
 def transform_excel(transform_strategy, input_file, output_file, start_column_name, count_column_name):
     # Load the workbook and select the active sheet
-    wb = openpyxl.load_workbook(input_file)
+    wb = openpyxl.load_workbook(input_file, data_only=True)
     sheet = wb.active
 
     # Find the start column index
