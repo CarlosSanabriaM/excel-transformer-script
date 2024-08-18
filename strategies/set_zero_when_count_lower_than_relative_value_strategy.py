@@ -9,7 +9,10 @@ class SetZeroWhenNumberLowerThanRelativeValueStrategy(TransformStrategy):
     relative to the count column (in percentage) is less than a relative value (in percentage).
     """
 
-    __MIN_RELATIVE_VALUE_PERCENTAGE = 0.1
+    DEFAULT_MIN_RELATIVE_VALUE_PERCENTAGE = 0.1
+
+    def __init__(self, min_relative_value_percentage=None):
+        self.min_relative_value_percentage = min_relative_value_percentage or self.DEFAULT_MIN_RELATIVE_VALUE_PERCENTAGE
 
     def transform_excel_sheet(self, sheet: Worksheet, start_column_index: int, count_column_name: str) -> None:
         # Iterate over the rows starting from the second row
@@ -26,7 +29,7 @@ class SetZeroWhenNumberLowerThanRelativeValueStrategy(TransformStrategy):
                 # Check if the integer value relative to the count column is less than the relative value
                 if int_value_cell.value is not None:
                     relative_value_percentage = int_value_cell.value / count_value * 100
-                    if relative_value_percentage < self.__MIN_RELATIVE_VALUE_PERCENTAGE:
+                    if relative_value_percentage < self.min_relative_value_percentage:
                         int_value_cell.value = 0
                         int_value_cell.font = self.red_font  # Set the text color to red
                         perc_value_cell.value = 0

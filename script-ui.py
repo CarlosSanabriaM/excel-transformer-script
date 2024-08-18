@@ -6,6 +6,7 @@ from textual.containers import Container
 from textual.widgets import Button, Input, Label, Header, Footer, TextArea
 
 from script import transform_excel
+from strategies.set_zero_when_count_lower_than_relative_value_strategy import SetZeroWhenNumberLowerThanRelativeValueStrategy
 
 
 class ExcelTransformerApp(App):
@@ -21,6 +22,11 @@ class ExcelTransformerApp(App):
         yield Input(placeholder="Enter the path to the output Excel file (example: output.xlsx)", id="output_file")
         yield Label("Start column name:")
         yield Input(placeholder="Enter the name of the first column to modify (example: First column to modify)", id="start_column")
+        yield Label("Count column name:")
+        yield Input(placeholder="Enter the name of the column that holds the count value (example: Num events)", id="count_column")
+        yield Label("Min count relative value (in percentage):")
+        yield Input(placeholder="Enter the min count percentage in relation to the count column in order to consider a row",
+                    id="min_count_relative_value", value=str(SetZeroWhenNumberLowerThanRelativeValueStrategy.DEFAULT_MIN_RELATIVE_VALUE_PERCENTAGE))
         yield Button(label="Transform", id="transform_button", variant="primary")
         yield Container(id="status_text_container")
         yield Footer()
@@ -37,10 +43,13 @@ class ExcelTransformerApp(App):
         input_file = self.query_one("#input_file", Input).value
         output_file = self.query_one("#output_file", Input).value
         start_column_name = self.query_one("#start_column", Input).value
+        count_column_name = self.query_one("#count_column", Input).value
+        min_count_relative_value = float(self.query_one("#min_count_relative_value", Input).value)
 
         # Perform the transformation
         try:
-            transform_excel(input_file, output_file, start_column_name)
+            transform_strategy = SetZeroWhenNumberLowerThanRelativeValueStrategy(min_count_relative_value)
+            transform_excel(transform_strategy, input_file, output_file, start_column_name, count_column_name)
 
             self.query_one("#status_text_container").remove_children()
             self.query_one("#status_text_container").mount(Label("✅ Successfully transformed Excel file", id="success_text"))
