@@ -53,7 +53,10 @@ class ExcelTransformerApp(App):
 
             self.query_one("#status_text_container").remove_children()
             self.query_one("#status_text_container").mount(Label("✅ Successfully transformed Excel file", id="success_text"))
-            self.query_one("#status_text_container").mount(Button(label="Open output Excel file", id="open_output_excel_button", variant="success"))
+            # TODO: "Open output Excel file" functionality is broken. Button does not appear.
+            #  For the moment, the open_output_excel() is invoked directly.
+            self.open_output_excel()
+            # self.query_one("#status_text_container").mount(Button(label="Open output Excel file", id="open_output_excel_button", variant="success"))
         except Exception as e:
             self.query_one("#status_text_container").remove_children()
             self.query_one("#status_text_container").mount(
