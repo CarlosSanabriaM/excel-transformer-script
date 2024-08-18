@@ -1,12 +1,16 @@
 import openpyxl
 
 from strategies.set_zero_when_count_lower_than_absolute_value_strategy import SetZeroWhenNumberLowerThanAbsoluteValueStrategy
+from strategies.set_zero_when_count_lower_than_relative_value_strategy import SetZeroWhenNumberLowerThanRelativeValueStrategy
 
 STRATEGIES_MAP = {
     'ABSOLUTE': SetZeroWhenNumberLowerThanAbsoluteValueStrategy(),
+    'RELATIVE': SetZeroWhenNumberLowerThanRelativeValueStrategy()
 }
 
-def transform_excel(transform_strategy, input_file, output_file, start_column_name):
+
+# noinspection PyShadowingNames
+def transform_excel(transform_strategy, input_file, output_file, start_column_name, count_column_name):
     # Load the workbook and select the active sheet
     wb = openpyxl.load_workbook(input_file)
     sheet = wb.active
@@ -23,7 +27,7 @@ def transform_excel(transform_strategy, input_file, output_file, start_column_na
 
     # Use the selected strategy to transform the sheet
     strategy = STRATEGIES_MAP.get(transform_strategy)
-    strategy.transform_excel_sheet(sheet, start_column_index)
+    strategy.transform_excel_sheet(sheet, start_column_index, count_column_name)
 
     # Save the modified workbook preserving the formatting
     wb.save(output_file)
@@ -32,9 +36,10 @@ def transform_excel(transform_strategy, input_file, output_file, start_column_na
 
 if __name__ == "__main__":
     # Update these values
-    transform_strategy = 'ABSOLUTE'  # Replace with your desired strategy
+    transform_strategy = 'RELATIVE'  # Replace with your desired strategy
     input_excel_file = 'input.xlsx'  # Replace with your input file name
     output_excel_file = 'output.xlsx'  # Replace with your desired output file name
     start_column_name = 'First column to modify'  # Replace with your specific start column name
+    count_column_name = 'Num events'  # Replace with your specific count column name
 
-    transform_excel(transform_strategy, input_excel_file, output_excel_file, start_column_name)
+    transform_excel(transform_strategy, input_excel_file, output_excel_file, start_column_name, count_column_name)
