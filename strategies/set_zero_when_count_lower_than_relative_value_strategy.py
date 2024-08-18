@@ -7,7 +7,7 @@ from strategies.transform_strategy import TransformStrategy
 
 class SetZeroWhenNumberLowerThanRelativeValueStrategy(TransformStrategy):
     """
-    Strategy that sets to zero the integer and percentage values in pairs of columns when the integer value
+    Strategy that sets to zero the percentage value in pairs of columns when the integer value
     relative to the count column (in percentage) is less than a relative value (in percentage).
     """
 
@@ -51,13 +51,12 @@ class SetZeroWhenNumberLowerThanRelativeValueStrategy(TransformStrategy):
                     relative_value_percentage = int_value_cell.value / count_value * 100
                     relative_value_cell.value = relative_value_percentage
                     if relative_value_percentage < self.min_relative_value_percentage:
-                        int_value_cell.value = 0
                         int_value_cell.font = self.red_font  # Set the text color to red
 
                         relative_value_cell.font = self.red_font  # Set the text color to red
                         relative_value_cell.comment = Comment(  # Set comment explaining the change
-                            f'{relative_value_percentage} < {self.min_relative_value_percentage}, so the cells to the left and right '
-                            f'were set to 0, because the number of values is not significant enough.',
+                            f'{int_value_cell.value} / {count_value} * 100 = {relative_value_percentage}% < {self.min_relative_value_percentage}%, '
+                            f'so the cell to the right was set to 0, because the number of values is not significant enough.',
                             '')
 
                         perc_value_cell.value = 0
