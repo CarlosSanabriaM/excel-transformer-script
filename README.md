@@ -6,8 +6,13 @@ This project is a Python-based tool designed to modify Excel files through a ter
 
 Utilizing the `openpyxl` library for Excel file manipulations and the [textual](https://github.com/Textualize/textual/tree/main) library
 for creating an interactive terminal UI, the script performs specific data transformations while preserving cell formatting and colors.
-It adjusts integer and percentage pairs in the spreadsheet, setting values below 100 to zero and marking these changes with red text.
 The user interface guides the user to input the necessary parameters, streamlining the transformation process for enhanced usability.
+
+The transformations are implemented using an Strategy design pattern. Currently, there are 2 strategies:
+* `SetZeroWhenNumberLowerThanAbsoluteValueStrategy`: It adjusts integer and percentage pairs in the spreadsheet,
+  setting values below 100 to zero and marking these changes with red text.
+* `SetZeroWhenNumberLowerThanRelativeValueStrategy`: Sets to zero the percentage value in pairs of columns when the integer value
+    relative to the count column (in percentage) is less than a relative value (in percentage).
 
 ## Steps to execute
 
